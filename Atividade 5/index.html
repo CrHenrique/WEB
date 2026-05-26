@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAREFAS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+
+    <section class="container py-5">
+
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="text-center mb-3">AGENDA DE TAREFAS</h4>
+                    
+                    <input type="text" id="atividade" class="form-control mb-2" placeholder="Digite uma tarefa">
+
+                    <select id="prioridade" class="form-select mb-2">
+                        <option value="alta">Importante</option>
+                        <option value="media">Mediana</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+
+                    <button class="btn btn-primary w-100" onclick="adicionarAtividade()">Adicionar</button>
+                </div>
+            </div>
+            <div id="lista" class="mt-3"></div>
+        </div>
+
+    </section>
+
+    <script>
+        function adicionarAtividade() {
+            let atividade = document.getElementById("atividade").value;
+            let prioridade = document.getElementById("prioridade").value;
+
+            let div = document.createElement("div");
+            div.className = `p-2 mb-2 rounded text-white ${prioridade}`;
+            div.innerHTML = atividade;
+
+            document.getElementById("lista").appendChild(div);
+
+            document.getElementById("atividade").value = "";
+        }
+    </script>
+
+</body>
+</html>
