@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Series</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Catalogo de Series</h1>
+
+    <input type="text" id="serie" placeholder="Digite uma série">
+    <button onclick="buscarSerie()">Buscar</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        async function buscarSerie() {
+
+            let serie = document.getElementById("serie").value;
+            let resultado = document.getElementById("resultado");
+
+            resultado.innerHTML = "";
+
+            try {
+
+                let resposta = await fetch(
+                    `https://api.tvmaze.com/search/shows?q=${serie}`
+                );
+
+                let dados = await resposta.json();
+
+                if (dados.length == 0) {
+                    resultado.innerHTML = "<p>Nenhuma série encontrada.</p>";
+                    return;
+                }
+
+                dados.forEach(item => {
+
+                    let imagem = "Sem imagem";
+
+                    if (item.show.image) {
+                        imagem = item.show.image.medium;
+                    }
+
+                    let card = document.createElement("div");
+                    card.classList.add("card");
+
+                    card.innerHTML = `
+                        ${item.show.image
+                            ? `<img src="${imagem}">`
+                            : "<p>Sem imagem</p>"}
+                            
+                        <h3>${item.show.name}</h3>
+                        <p>Nota: ${item.score}</p>
+                    `;
+
+                    resultado.appendChild(card);
+                });
+
+            } catch (erro) {
+                resultado.innerHTML = "<p>Erro ao buscar séries.</p>";
+            }
+        }
+    </script>
+
+</body>
+</html>
